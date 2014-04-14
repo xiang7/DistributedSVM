@@ -1,0 +1,2 @@
+writeup:
+	pdflatex writeup.tex

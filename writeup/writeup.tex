@@ -1,0 +1,118 @@
+\documentclass[10pt,conference,compsocconf,letterpaper]{IEEEtran}
+%\documentclass{article}
+\title{Distributed SVM}
+\author{Luojie Xiang}
+\date{}
+
+\begin{document}
+\maketitle{}
+\section{Introduction}
+
+The idea of the project is to design and implement a distributed SVM with the following two requirements:
+
+\begin{itemize}
+\item Faster training than standard SVM
+\item BFT
+\end{itemize}
+
+\section{SVM Training Algorithm}
+
+The design of SVM training algorithm should be parallelizable so that the training algorithm could be faster and has better tolerance against malicious attacks than standard SVM algorithm.
+
+\textbf{1. Baseline: Ensemble Learning}
+
+Ensemble Learning is a classic idea of improving any machine learning algorithm's resilliency against noise in the training dataset \cite{leo96, dong05}. It has also been used as a defense strategy against malicious attacks \cite{marco08, gabriela08}. 
+
+Ensemble learning is used as our baseline, in which the training happens as follows:
+
+\begin{itemize}
+\item Step 1 - Create $N$ samples out of the training set by sampling with replacement.
+\item Step 2 - Scatter $N$ samples to $N$ machines.
+\item Step 3 - Train an SVM on each machine.
+\item Step 4 - All $N$ SVMs vote on new data points during prediction.
+\end{itemize}
+
+\textbf{2. A better Algorithm: Modified Adaptive Cluster}
+
+Adaptive Cluster was proposed for reducing training set size for SVM \cite{boley04, hwanjo03}, based on the idea that, SVM's decision plane relies only on support vectors \cite{koggalage04}. The process is, 
+
+\begin{itemize}
+\item Step 1 - Cluster the training set.
+\item Step 2 - Train an initial SVM based on the representatives of the clusters (such as centroid).
+\item Step 3 - Train a final SVM using the clusters that contain support vectors in the initial SVM.
+\end{itemize}
+
+This method is modified to include resiliency against malicious attacks.
+
+\begin{itemize}
+\item Change 1 - After step 1 of original Adaptive Cluster algorithm, add a sanitization step, using either distance filtering, or active learning (explained later).
+\item Change 2 - Use the Adaptive Cluster algorithm in the ensemble framework. Step 3 in ensemble learning algorithm is changed to Adaptive Cluster algorithm above.
+\end{itemize}
+
+\textit{Distance filtering} - Malicious data points will be far away from benign data points. For example, label flip attack \cite{xiao12} picks benign data, say positive class, flip the label to negative class and insert it back to the training set. These data points will reside in the positive area except now they all have negative label. Therefore, the malicious points (with negative label) will be very far away with the benign negative points. Thus, they're very likely to be put into a separate cluster if the negative points are clustered and this cluster is very likely to be very far away from the other negative clusters. Using some distance filtering, such as probability distribution threshold will identify the malicious cluster.
+
+\textit{Active Learning} - Active learning have machine learning algorithms summarizes the dataset and present to human experts the data points that it is most not sure of \cite{reghavan06}. Human experts will label these very concise summaries and guide the learning process. Since in Adaptive Cluster algorithm, the representatives of each cluster is found, they can be convieniently used as the summary. Human expert will tell the learning algorithm which representatives are malicious. The cluster whose representative is labeled malicious by the expert will be thrown away.
+
+\section{BFT}
+
+To be ... learned.
+
+\section{Evaluation}
+
+The evaluation comes in three fold:
+
+\textit{Speed} - The speed would be compared with standard SVM training.
+
+\textit{Resiliency against malicious attacks} - The accuracy will be compared with standard SVM as more malicious points are added.
+
+\textit{BFT} - TODO to be added
+
+\subsection{Attacks}
+
+The attacks include some or all of the following:
+
+\begin{itemize}
+\item Loss Optimization attack - optimizing loss function \cite{biggio12}
+\item Label Flip attack - flip the label of benign data \cite{xiao12}
+\item Red herring attack - add fake feature and have target classifier depend on fake features as heavy as possible \cite{newsome06}
+\item Inseparability attack - mix the important features from target classifier into same data points to confuse it \cite{newsome06}
+\end{itemize}
+
+\subsection{The dataset to be used}
+A lot of datasets are made publicly available thanks to competitions such as KDD CUP, Kaggle and research groups such as UCI Machine Learning Repository, LIBSVM \cite{kddcup,kaggle,uci,libsvm}. Appropriate dataset will be selected later to facilitate testing.
+
+\begin{thebibliography}{9}
+
+\bibitem{leo96}
+Breiman, Leo. "Bagging predictors." Machine learning 24, no. 2 (1996): 123-140.
+\bibitem{marco08}
+Barreno, Marco, Peter L. Bartlett, Fuching Jack Chi, Anthony D. Joseph, Blaine Nelson, Benjamin IP Rubinstein, Udam Saini, and J. Doug Tygar. "Open problems in the security of learning." In Proceedings of the 1st ACM workshop on Workshop on AISec, pp. 19-26. ACM, 2008.
+\bibitem{dong05}
+Dong, Yan-Shi, and Ke-Song Han. "Boosting SVM classifiers by ensemble." In Special interest tracks and posters of the 14th international conference on World Wide Web, pp. 1072-1073. ACM, 2005.
+\bibitem{gabriela08}
+Cretu, Gabriela F., Angelos Stavrou, Michael E. Locasto, Salvatore J. Stolfo, and Angelos D. Keromytis. "Casting out demons: Sanitizing training data for anomaly sensors." In Security and Privacy, 2008. SP 2008. IEEE Symposium on, pp. 81-95. IEEE, 2008.
+\bibitem{boley04}
+Boley, Daniel, and Dongwei Cao. "Training Support Vector Machines Using Adaptive Clustering." In SDM. 2004.
+\bibitem{hwanjo03}
+Yu, Hwanjo, Jiong Yang, and Jiawei Han. "Classifying large data sets using SVMs with hierarchical clusters." In Proceedings of the ninth ACM SIGKDD international conference on Knowledge discovery and data mining, pp. 306-315. ACM, 2003.
+\bibitem{koggalage04}
+Koggalage, Ravindra, and Saman Halgamuge. "Reducing the number of training samples for fast support vector machine classification." Neural Information Processing-Letters and Reviews 2, no. 3 (2004): 57-65.
+\bibitem{xiao12}
+Xiao, Han, Huang Xiao, and Claudia Eckert. "Adversarial Label Flips Attack on Support Vector Machines." In ECAI, pp. 870-875. 2012.
+\bibitem{reghavan06}
+Raghavan, Hema, Omid Madani, and Rosie Jones. "Active learning with feedback on features and instances." The Journal of Machine Learning Research 7 (2006): 1655-1686.
+\bibitem{biggio12}
+Battista Biggio, Blaine Nelson, Pavel Laskov: Poisoning Attacks against Support Vector Machines. ICML 2012
+\bibitem{newsome06}
+Newsome, James, Brad Karp, and Dawn Song. "Paragraph: Thwarting signature learning by training maliciously." In Recent advances in intrusion detection, pp. 81-105. Springer Berlin Heidelberg, 2006.
+\bibitem{kddcup}
+http://www.sigkdd.org/kddcup/index.php
+\bibitem{kaggle}
+http://www.kaggle.com/
+\bibitem{uci}
+http://archive.ics.uci.edu/ml/
+\bibitem{libsvm}
+http://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/
+\end{thebibliography}
+
+\end{document}
