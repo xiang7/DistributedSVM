@@ -15,6 +15,72 @@ The idea of the project is to design and implement a distributed SVM with the fo
 \item BFT
 \end{itemize}
 
+\section{Attack Model}
+
+This work assumes all computers can be trusted. The attack comes from the training dataset. The adversary has the following capabilities:
+
+\begin{itemize}
+\item Know the victim's dataset. 
+\item Has computing power to create data points.
+\item Can insert data points into the victim's dataset.
+\end{itemize}
+
+This is a practical assumption. The difference of attackers comes in the algorithm they use to create data points. Different algorithms may result in different damage power on the victim's SVM accuracy.
+
+Next session looks into attack algorithms.
+
+
+\section{Attack Algorithm}
+
+The attacks include some or all of the following:
+
+\begin{itemize}
+\item Loss Optimization attack - create datapoints that optimize loss function \cite{biggio12}
+\item Red herring attack - add fake feature and have target classifier depend on fake features as heavily as possible \cite{newsome06}
+\item Inseparability attack - mix the features from target classifier into same data points to confuse it \cite{newsome06}
+\item Furthest-First Flip attack - pick the furthest data point from the decision plane and flip its label \cite{xiao12}
+\end{itemize}
+
+\subsection{Red Herring Attack}
+
+This attack creates fake features and a strong statistical relationship between the fake features and the class label. This encourages the SVM to learn the fake features as important or indicative features, so that the decision will rely heavily on them. The distribution of the fake features will of course be very different from other benign features. Thus, the prediction accuracy of SVM will be compromised.
+
+The attack works as follows:
+
+\begin{itemize}
+\item Step 1 - Create $N$ data points, each with $k$ random benign features.
+\item Step 2 - Cut the $N$ data points into 2 halves, $S_1$ and $S_2$. For all points in $S_1$, add a feature that never appeared in the benign dataset.
+\item Step 3 - Label all points in $S_1$ as positive and those in $S_2$ as negative.
+\item Step 4 - Insert the data points (interleaved, one positive one negative) into victim's dataset.
+\end{itemize}
+
+\subsection{Inseparability Attack}
+
+This attack mixes the features of the victim's training set and give them random labels. This will confuse the victim's SVM and bring down its accuracy.
+
+The attack works as follows:
+
+\begin{itemize}
+\item Step 1 - Create $N$ data points, each with $k$ random benign features.
+\item Step 2 - For each data point, assign a random label.
+\item Step 3 - Insert the data points into victim's dataset.
+\end{itemize}
+
+\subsection{Furthest-First Flip Attack}
+
+This attack picks the data point that is furthest from the SVM decision plane and flip its label. It is shown to generate a near-optimal attack effect on SVM \cite{xiao12}. Another benefit of this attack over the optimal attack is, it works on discrete feature space, since optimal attack involves solving convex optimization over loss function which requires a differentiable field. This limits optimal attacks to only continuous feature space.
+
+The attack works as follows:
+
+\begin{itemize}
+\item Step 1 - Train an SVM on benign data set.
+\item Step 2 - Apply the decision function of SVM on all data points of the benign data set.
+\item Step 3 - Sort the decision values and find the maximum in absolute value.
+\item Step 4 - Flip the chosen point and insert it back into the benign data set.
+\end{itemize}
+
+%TODO  my use ALFA, code available
+
 \section{SVM Training Algorithm}
 
 The design of SVM training algorithm should be parallelizable so that the training algorithm could be faster and has better tolerance against malicious attacks than standard SVM algorithm.
@@ -67,15 +133,6 @@ The evaluation comes in three fold:
 
 \textit{BFT} - TODO to be added
 
-\subsection{Attacks}
-
-The attacks include some or all of the following:
-
-\begin{itemize}
-\item Loss Optimization attack - create datapoints that optimize loss function \cite{biggio12}
-\item Red herring attack - add fake feature and have target classifier depend on fake features as heavily as possible \cite{newsome06}
-\item Inseparability attack - mix the important features from target classifier into same data points to confuse it \cite{newsome06}
-\end{itemize}
 
 \subsection{The dataset to be used}
 A lot of datasets are made publicly available thanks to competitions such as KDD CUP, Kaggle and research groups such as UCI Machine Learning Repository, LIBSVM \cite{kddcup,kaggle,uci,libsvm}. Appropriate dataset will be selected later to facilitate testing.
