@@ -14,6 +14,10 @@ attack sets: implement the attacks, and apply them to the training set to get at
 
 Shunrang:
 
+Setup libsvm library.
+
+Implement paralleled SVM training.
+
 
 
 
