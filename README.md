@@ -6,6 +6,19 @@ Towards a better attack resiliency
 
 Current Task
 ============
+Luojie:
+
+find cluster code for c, and figure out the adaptive cluster implementation
+
+Shunrang:
+
+implement MPI SVM training (Approach 1 ensemble). 
+write experiment of training on single/multiple machine, compare the time with different training set size
+
+
+
+Done
+============
 
 Luojie:
 
