@@ -8,12 +8,18 @@
 \maketitle{}
 \section{Introduction}
 
+Support Vector Machines (SVM) is an important machine learning algorithm. The basic SVM is a binary classifier which seeks to find a hyperplane that separates data points into two classes. SVM is a max-margin classifier which tries to maximize the distance of the hyperplane to the boundary points of each class. The boundary points are called support vectors and thus the name support vector machine. 
+
+SVM has many advantages over other machine learning algorithms. Its decision relies only on support vectors. This means, once trained, it make future predictions very quickly due to the few amount of support vectors. The training itself is a well-formed convex optimization problem so that convergence is guaranteed. 
+
 The idea of the project is to design and implement a distributed SVM with the following two requirements:
 
 \begin{itemize}
 \item Faster training than standard SVM
-\item BFT
+\item Better resiliency towards malicious attack
 \end{itemize}
+
+The attack model and attack algorithms are described in next two sections.
 
 \section{Attack Model}
 
@@ -79,8 +85,6 @@ The attack works as follows:
 \item Step 4 - Flip the chosen point and insert it back into the benign data set.
 \end{itemize}
 
-%TODO  my use ALFA, code available
-
 \section{SVM Training Algorithm}
 
 The design of SVM training algorithm should be parallelizable so that the training algorithm could be faster and has better tolerance against malicious attacks than standard SVM algorithm.
@@ -119,23 +123,39 @@ This method is modified to include resiliency against malicious attacks.
 
 \textit{Active Learning} - Active learning have machine learning algorithms summarizes the dataset and present to human experts the data points that it is most not sure of \cite{reghavan06}. Human experts will label these very concise summaries and guide the learning process. Since in Adaptive Cluster algorithm, the representatives of each cluster is found, they can be convieniently used as the summary. Human expert will tell the learning algorithm which representatives are malicious. The cluster whose representative is labeled malicious by the expert will be thrown away.
 
-\section{BFT}
-
-To be ... learned.
-
 \section{Evaluation}
 
 The evaluation comes in three fold:
 
 \textit{Speed} - The speed would be compared with standard SVM training.
 
+Standard SVM	- 100, 1000, 10,000 12,000 ... too long to train
+Distributed SVM	- 10,000 12,000 ... 
+
+Record Acc, Time
+
 \textit{Resiliency against malicious attacks} - The accuracy will be compared with standard SVM as more malicious points are added.
 
-\textit{BFT} - TODO to be added
+Standard SVM    - 10,000 +2,000 malicious point ... too long to train
+Distributed SVM - 10,000 +2,000 ... 
 
+Record Acc
 
-\subsection{The dataset to be used}
+\subsection{Dataset}
 A lot of datasets are made publicly available thanks to competitions such as KDD CUP, Kaggle and research groups such as UCI Machine Learning Repository, LIBSVM \cite{kddcup,kaggle,uci,libsvm}. Appropriate dataset will be selected later to facilitate testing.
+
+\begin{table*}[t]
+\centering
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+Dataset&Source & \# of classes & \# of data (training/testing) & \# of features (training/testing) \\
+\hline
+w8a&\cite{jp98} & 2 & 49,749 / 14,951 & 300 / 300 \\
+\hline
+\end{tabular}
+\end{table*}
+
+
 
 \begin{thebibliography}{9}
 
@@ -169,6 +189,8 @@ http://www.kaggle.com/
 http://archive.ics.uci.edu/ml/
 \bibitem{libsvm}
 http://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/
+\bibitem{jp98}
+John C. Platt. "Fast training of support vector machines using sequential minimal optimization". In Bernhard Schölkopf, Christopher J. C. Burges, and Alexander J. Smola, editors, Advances in Kernel Methods - Support Vector Learning, Cambridge, MA, 1998. MIT Press.
 \end{thebibliography}
 
 \end{document}

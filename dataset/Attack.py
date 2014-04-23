@@ -194,10 +194,10 @@ def export_list(l,file_name):
 			f.write(item+'\n')
 
 #clean a data set
-#clean('w8a','w8aclean')
+clean('w8a.t','w8a.tclean')
 #create for rh attack
 #rh_create('w8aclean',45546,'rh_w8aclean')
 #create for inseparability attack
 #insep_create('w8aclean',45546,'insep_w8aclean')
 #create for fff attack
-fff_create('test',46000,100,'fff_w8aclean')
+#fff_create('test',46000,100,'fff_w8aclean')
