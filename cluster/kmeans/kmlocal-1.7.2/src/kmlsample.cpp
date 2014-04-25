@@ -101,7 +101,7 @@ void write_file (double * vec, int len, int label,FILE *fd) {
         int j=0;
                 fprintf(fd,"%d", label);
                 for (j = 0; j < len; j++) {
-                        if (vec[j])
+                        if (abs(vec[j])>0.000001)
                           fprintf(fd, " %d:%f", j, vec[j]);
                 }
                 fprintf(fd, "\n");
@@ -127,14 +127,12 @@ double standard_deviation(double* data, int n)
 double dist(double* x, double* y, int len)
 {
 	double sum=0.0;
-	double distance=0.0;
 	for(int i=0;i<len;i++)
 	{
-		int diff=x[i] - y[i];
+		double diff=x[i] - y[i];
 		sum = sum + diff * diff;
-		distance = sqrt(sum);
 	}
-	return distance;
+	return sqrt(sum);
 }
 
 
@@ -155,6 +153,14 @@ void prob_test(double** x, int m, int n, int* result, int *count){
 	double dis[m];
 	for(i=0;i<m;i++)
 		dis[i]=avg_dist(x[i],x,m,n);
+/*
+	for (i=0;i<m;i++){
+		for(int j=0;j<n;j++){
+			printf("%f ",x[i][j]);
+		}
+		printf("\n\n\n\n");
+	}
+*/		
 	double avg=mean(dis,m);
 	double std=standard_deviation(dis,m);
 	cout << avg <<"\n";
@@ -213,9 +219,11 @@ int main(int argc, char **argv)
 	kmClusGaussPts(dataPts.getPts(), nPts, dim, k);
     }
 
+/*
     cout << "Data Points:\n";			// echo data points
     for (int i = 0; i < nPts; i++)
 	printPt(cout, dataPts[i]);
+*/
 
     dataPts.setNPts(nPts);			// set actual number of pts
     dataPts.buildKcTree();			// build filtering structure
@@ -226,9 +234,9 @@ int main(int argc, char **argv)
     cout << "\nExecuting Clustering Algorithm: Lloyd's\n";
     KMlocalLloyds kmLloyds(ctrs, term);		// repeated Lloyd's
     ctrs = kmLloyds.execute();			// execute
-    printSummary(kmLloyds, dataPts, ctrs);	// print summary
+    //printSummary(kmLloyds, dataPts, ctrs);	// print summary
 
-    cout << "centers: "<< ctrs.getK()<<"\n";
+  //  cout << "centers: "<< ctrs.getK()<<"\n";
     KMcenterArray ctrpts=ctrs.getCtrPts();
     int result[ctrs.getK()];
     int count=0;
@@ -241,6 +249,8 @@ int main(int argc, char **argv)
     char *tmp_name = (char *) malloc (11); 
     sprintf(tmp_name, "output%s", (label==1?"_pos":"_neg"));
     FILE* fd=fopen(tmp_name,"w");
+    cout<<"label "<<label<<"\n";
+    cout<<"Number of points: "<<dataPts.getNPts()<<"\n";
     for (int i=0;i<nPts;i++)
 	if(!inArray(result,count,closeCtr[i]))    
 		write_file(dataPts[i],ctrs.getDim(),label,fd);
