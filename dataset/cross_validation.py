@@ -96,7 +96,7 @@ for i in range(0,fold):
 		if args.pcw:
 			model=LinearSVC(class_weight={pos:args.pcw,neg:args.ncw}).fit(x_train,y_train)
 		else:
-			model=LinearSVC().fit(x_train,y_train)
+			model=SVC(kernel='linear').fit(x_train,y_train)
 	
 	p_test=model.predict(x_test)
 	tp=0

@@ -83,6 +83,7 @@ sample: $(KMLSAMPLE)
 
 minimal: $(KMLMINIMAL) 
 
+
 $(KMLTEST): $(TESTOBJECTS) kmltest.o
 	$(C++) $(TESTOBJECTS) kmltest.o -o kmltest $(LDFLAGS) $(OTHERLIBS)
 	mv -f kmltest $(KMLTEST)
@@ -142,6 +143,7 @@ kmltest.o: KMeans.h KMdata.h KMcenters.h KMfilterCenters.h \
 kmlsample.o: KMeans.h KMdata.h KMcenters.h KMfilterCenters.h \
 	KMlocal.h KMterm.h kmlsample.cpp
 	$(C++) -c $(CFLAGS) kmlsample.cpp
+
 
 kmlminimal.o: KMeans.h KMdata.h KMcenters.h KMfilterCenters.h \
 	KMlocal.h KMterm.h kmlminimal.cpp

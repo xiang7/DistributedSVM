@@ -72,6 +72,7 @@ int	dim		= 2;		// dimension
 int	maxPts		= 100;		// max number of data points
 int	stages		= 100;		// number of stages
 istream* dataIn		= NULL;		// input data stream
+int label		=1;
 
 //----------------------------------------------------------------------
 //  Termination conditions
@@ -85,6 +86,113 @@ KMterm	term(100, 0, 0, 0,		// run for 100 stages
 		0.50,			// init. prob. of acceptance
 		10,			// temp. run length
 		0.95);			// temp. reduction factor
+
+//compute mean of data of length n
+double mean(double* data, int n){
+	int i=0;
+	double sum=0.0;
+	for(i=0;i<n;i++)
+		sum+=data[i];
+	return sum/n;
+}
+
+
+void write_file (double * vec, int len, int label,FILE *fd) {
+        int j=0;
+                fprintf(fd,"%d", label);
+                for (j = 0; j < len; j++) {
+                        if (vec[j])
+                          fprintf(fd, " %d:%f", j, vec[j]);
+                }
+                fprintf(fd, "\n");
+        }
+
+
+//compute std of data of length n
+double standard_deviation(double* data, int n)
+{
+    double mean=0.0, sum_deviation=0.0;
+    int i=0;
+    for(i=0; i<n;i++)
+    {
+        mean+=data[i];
+    }
+    mean=mean/n;
+    for(i=0; i<n;i++)
+    sum_deviation+=(data[i]-mean)*(data[i]-mean);
+    return sqrt(sum_deviation/n);           
+}
+
+//compute the distance between two points
+double dist(double* x, double* y, int len)
+{
+	double sum=0.0;
+	double distance=0.0;
+	for(int i=0;i<len;i++)
+	{
+		int diff=x[i] - y[i];
+		sum = sum + diff * diff;
+		distance = sqrt(sum);
+	}
+	return distance;
+}
+
+
+//compute the avg dist of a point x to a lot of points y
+double avg_dist(double* x,double** y, int m, int n){
+	int i=0;
+	double sum=0.0;
+	for(i=0;i<m;i++)
+		sum+=dist(x,y[i],n);
+	return sum/(m-1);
+		
+}
+
+//test points x, of dim (m,n), find points that're too far away > mean+3std
+//result contains the index, count is the number of results
+void prob_test(double** x, int m, int n, int* result, int *count){
+	int i=0;
+	double dis[m];
+	for(i=0;i<m;i++)
+		dis[i]=avg_dist(x[i],x,m,n);
+	double avg=mean(dis,m);
+	double std=standard_deviation(dis,m);
+	cout << avg <<"\n";
+	cout << std <<"\n";
+	*count=0;
+	for(i=0;i<m;i++){
+		if(dis[i]>avg+std){
+			result[*count]=i;
+			(*count)++;
+		}	
+		cout<<dis[i]<<" "<<avg+std<<(*count)<<"\n";
+	}
+}
+
+void prob_test_dists(double *x, int m,int* result, int *count){
+	double avg=mean(x,m);
+	double std=standard_deviation(x,m);
+	cout << "avg: "<< avg <<"\n";
+	cout << "std: "<< std <<"\n";
+	*count=0;
+	int i=0;
+	for(i=0;i<m;i++){
+		if(x[i]>avg+std){
+			result[*count]=i;
+			(*count)++;
+		}	
+		cout<<"point "<<x[i]<<" "<<avg+std<<(*count)<<"\n";
+	}
+}
+
+//if num is in array a of length len
+int inArray(int *a, int len, int num){
+	int i=0;
+	for(i=0;i<len;i++)
+		if(num==a[i])
+			return 1;
+	return 0;
+}
 
 //----------------------------------------------------------------------
 //  Main program
@@ -120,7 +228,25 @@ int main(int argc, char **argv)
     ctrs = kmLloyds.execute();			// execute
     printSummary(kmLloyds, dataPts, ctrs);	// print summary
 
-    cout << "\nExecuting Clustering Algorithm: Swap\n";
+    cout << "centers: "<< ctrs.getK()<<"\n";
+    KMcenterArray ctrpts=ctrs.getCtrPts();
+    int result[ctrs.getK()];
+    int count=0;
+    prob_test(ctrpts,ctrs.getK(),ctrs.getDim(),result,&count);
+//    prob_test_dists(ctrs.getDists(),ctrs.getDim(),result,&count);
+    cout << "anomaly: "<<count<<"\n";
+    KMctrIdxArray closeCtr = new KMctrIdx[dataPts.getNPts()];
+    double* sqDist = new double[dataPts.getNPts()];
+    ctrs.getAssignments(closeCtr, sqDist);
+    char *tmp_name = (char *) malloc (11); 
+    sprintf(tmp_name, "output%s", (label==1?"_pos":"_neg"));
+    FILE* fd=fopen(tmp_name,"w");
+    for (int i=0;i<nPts;i++)
+	if(!inArray(result,count,closeCtr[i]))    
+		write_file(dataPts[i],ctrs.getDim(),label,fd);
+    fclose(fd);
+
+/*    cout << "\nExecuting Clustering Algorithm: Swap\n";
     KMlocalSwap kmSwap(ctrs, term);		// Swap heuristic
     ctrs = kmSwap.execute();
     printSummary(kmSwap, dataPts, ctrs);
@@ -134,9 +260,11 @@ int main(int argc, char **argv)
     KMlocalHybrid kmHybrid(ctrs, term);		// Hybrid heuristic
     ctrs = kmHybrid.execute();
     printSummary(kmHybrid, dataPts, ctrs);
-
+*/
     kmExit(0);
 }
+
+
 
 //----------------------------------------------------------------------
 //  getArgs - get command line arguments
@@ -186,6 +314,9 @@ void getArgs(int argc, char **argv)
 	    }
 	    dataIn = &dataStream;
 	}
+	else if (!strcmp(argv[i], "-l")) {      // label option
+            label = atoi(argv[++i]);
+        }
 	else if (!strcmp(argv[i], "-s")) {	// -s option
 	    stages = atoi(argv[++i]);
 	}
@@ -213,11 +344,11 @@ bool readPt(istream& in, KMpoint& p)
 
 void printPt(ostream& out, const KMpoint& p)
 {
-    out << "(" << p[0];
+    out << "" << p[0];
     for (int i = 1; i < dim; i++) {
-	out << ", " << p[i];
+	out << " " << p[i];
     }
-    out << ")\n";
+    out << "\n";
 }
 
 //------------------------------------------------------------------------
