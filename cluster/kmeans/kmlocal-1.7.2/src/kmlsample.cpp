@@ -167,11 +167,11 @@ void prob_test(double** x, int m, int n, int* result, int *count){
 	cout << std <<"\n";
 	*count=0;
 	for(i=0;i<m;i++){
-		if(dis[i]>avg+std){
+		if(dis[i]>avg+2*std){
 			result[*count]=i;
 			(*count)++;
 		}	
-		cout<<dis[i]<<" "<<avg+std<<(*count)<<"\n";
+		cout<<dis[i]<<" "<<avg+2*std<<(*count)<<"\n";
 	}
 }
 
@@ -238,6 +238,11 @@ int main(int argc, char **argv)
 
   //  cout << "centers: "<< ctrs.getK()<<"\n";
     KMcenterArray ctrpts=ctrs.getCtrPts();
+//write centoids to file
+//run svm
+// predict
+// collect indexes of cluster to thrown away
+//out put only clusters to be saved
     int result[ctrs.getK()];
     int count=0;
     prob_test(ctrpts,ctrs.getK(),ctrs.getDim(),result,&count);
