@@ -23,6 +23,7 @@
 #include <string>			// C++ strings
 #include "KMlocal.h"			// k-means algorithms
 #include "string.h"
+#include "svm.h"
 
 using namespace std;			// make std:: available
 
@@ -255,6 +256,11 @@ int main(int argc, char **argv)
     sprintf(tmp_name, "output%s", (label==1?"_pos":"_neg"));
     FILE* fd=fopen(tmp_name,"w");
     cout<<"label "<<label<<"\n";
+    char *tmp_name_ctrs = (char *) malloc (9); 
+    sprintf(tmp_name_ctrs, "ctrs%s", (label==1?"_pos":"_neg"));
+    FILE* fdctrs=fopen(tmp_name_ctrs,"w");
+    for(int i=0;i<ctrs.getK();i++)
+	write_file(ctrs[i],ctrs.getDim(),label,fdctrs);
     cout<<"Number of points: "<<dataPts.getNPts()<<"\n";
     for (int i=0;i<nPts;i++)
 	if(!inArray(result,count,closeCtr[i]))    

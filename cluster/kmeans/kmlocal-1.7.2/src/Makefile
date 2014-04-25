@@ -43,7 +43,7 @@ KMLMINIMAL = $(BIN_DIR)/kmlminimal
 
 TESTSOURCES = KM_ANN.cpp KMeans.cpp  KMterm.cpp KMrand.cpp \
 	KCutil.cpp KCtree.cpp KMdata.cpp KMcenters.cpp \
-	KMfilterCenters.cpp KMlocal.cpp
+	KMfilterCenters.cpp KMlocal.cpp svm.cpp
 
 TESTOBJECTS = $(TESTSOURCES:.cpp=.o)
 
@@ -79,7 +79,7 @@ all: $(KMLTEST) $(KMLSAMPLE) $(KMLMINIMAL)
 
 test: $(KMLTEST) 
 
-sample: $(KMLSAMPLE) 
+sample: $(KMLSAMPLE)  
 
 minimal: $(KMLMINIMAL) 
 
@@ -131,6 +131,9 @@ KMfilterCenters.o: KMeans.h KMdata.h KMcenters.h KMfilterCenters.h \
 KMlocal.o: KMeans.h KMdata.h KMcenters.h KMfilterCenters.h \
 	KMlocal.h KMlocal.cpp
 	$(C++) -c $(CFLAGS) KMlocal.cpp
+
+svm.o: svm.cpp svm.h
+	$(C++) -c $(CFLAGS) svm.cpp svm.h
 
 #-----------------------------------------------------------------------------
 # Test and Sample Program
