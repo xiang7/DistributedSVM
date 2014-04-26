@@ -101,9 +101,9 @@ double mean(double* data, int n){
 void write_file (double * vec, int len, int label,FILE *fd) {
         int j=0;
                 fprintf(fd,"%d", label);
-                for (j = 0; j < len; j++) {
+                for (j = 1; j < len; j++) {
                         if (abs(vec[j])>0.000001)
-                          fprintf(fd, " %d:%f", j, vec[j]);
+                          fprintf(fd, " %d:%d", j, (int)vec[j]);
                 }
                 fprintf(fd, "\n");
         }
@@ -168,11 +168,11 @@ void prob_test(double** x, int m, int n, int* result, int *count){
 	cout << std <<"\n";
 	*count=0;
 	for(i=0;i<m;i++){
-		if(dis[i]>avg+2*std){
+		if(dis[i]>avg+std){
 			result[*count]=i;
 			(*count)++;
 		}	
-		cout<<dis[i]<<" "<<avg+2*std<<(*count)<<"\n";
+		//cout<<dis[i]<<" "<<avg+3*std<<(*count)<<"\n";
 	}
 }
 
@@ -214,6 +214,7 @@ int main(int argc, char **argv)
     						// generate points
     if (dataIn != NULL) {			// read points from file
 	while (nPts < maxPts && readPt(*dataIn, dataPts[nPts])) nPts++;
+	cout << "points read: " << nPts << " max points: " << maxPts <<"\n";
     }
     else {					// generate points randomly
 	nPts = maxPts;
@@ -233,9 +234,14 @@ int main(int argc, char **argv)
 
     						// run each of the algorithms
     cout << "\nExecuting Clustering Algorithm: Lloyd's\n";
-    KMlocalLloyds kmLloyds(ctrs, term);		// repeated Lloyd's
+//    KMlocalHybrid kmHybrid(ctrs, term);		// Hybrid heuristic
+ //   ctrs = kmHybrid.execute();
+//   KMlocalSwap kmSwap(ctrs, term);		// Swap heuristic
+  //  ctrs = kmSwap.execute();
+    //printSummary(kmSwap, dataPts, ctrs);
+    KMlocalLloyds kmLloyds(ctrs, term);		// repeated Lloyd's , the best one
     ctrs = kmLloyds.execute();			// execute
-    //printSummary(kmLloyds, dataPts, ctrs);	// print summary
+   // printSummary(kmLloyds, dataPts, ctrs);	// print summary
 
   //  cout << "centers: "<< ctrs.getK()<<"\n";
     KMcenterArray ctrpts=ctrs.getCtrPts();
