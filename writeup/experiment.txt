@@ -20,6 +20,8 @@ Experiment3: Show cluster has better attack resiliance than ensemble.
 * Sample N pieces of training data with raplacement on 
 * Run clustering to filter attack points on each sample
 * Run ensemble 
+* Clean data size: 5000
+* Attack data: 500:500:5000
 * Record [training time], [predicting time], [predicting precision]
 * Plot [predicting precision] against attack data size
 * Compare [predicting precision] with experiment2
