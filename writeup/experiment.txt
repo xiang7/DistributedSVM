@@ -13,24 +13,13 @@ Experiment2: Show ensemble has better attack resiliance than serial SVM
 * Attack data: 500:500:5000
 * In dist. SVM, size of training data is also 5000. It's obtained by sample with replacement
 * Record [training time], [predicting time], [predicting precision]
-* Plot [predicting predicsion] against attack data size
+* Plot [predicting precision] against attack data size
 * Run the above experiment for fff_ttt, rff_ttt, nff_ttt
 
 Experiment3: Show cluster has better attack resiliance than ensemble.
-* Run cluster filtering on attacked training data
-* Run serial SVM on filtered data
-* Clean data: 5000
-* Attack data: 500:500:5000
+* Sample N pieces of training data with raplacement on 
+* Run clustering to filter attack points on each sample
+* Run ensemble 
 * Record [training time], [predicting time], [predicting precision]
 * Plot [predicting precision] against attack data size
-* Compare [time] here with [time] in experiment2
-
-Experiment4: Combine cluster with ensemble
-* Run cluster filterring on attacked traininig data
-* Emsemble filtered data
-* Run ensemble SVM
-* Clean data: 5000
-* Attack data: 500:500:5000
-* 6/7 of training data is ensembled
-* Record [predicting precision]
-* Compare [predicting precision] with experiment3
+* Compare [predicting precision] with experiment2
