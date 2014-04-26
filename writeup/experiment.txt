@@ -1,0 +1,36 @@
+The advantages of distributed SVM over serial SVM are speed and attack resiliance. 
+Experiment1: Show dist. SVM is faster than serial SVM without sacrificing precision when there is no attack in training data.
+* Run serial SVM and dist. SVM
+* Training data size: 5000:2000:30000
+* In dist. SVM, size of training data is 1/7 of original training data
+* Record [training time], [predicting time], [predicting precision]
+* Plot [training time] against [data size]
+* At the same time, mention that precision of dist. SVM is almost same as serial SVM (We cannot plot precision here. The reason is that from data size as 5000, the precion will alway ramain the same value. If we plot the precison, people may doubt the necessity of choosing a training data greater than 5000)
+
+Experiment2: Show ensemble has better attack resiliance than serial SVM
+* Run serial SVM and emsemble SVM with attaced training data
+* Clean data size: 5000
+* Attack data: 500:500:5000
+* In dist. SVM, size of training data is also 5000. It's obtained by sample with replacement
+* Record [training time], [predicting time], [predicting precision]
+* Plot [predicting predicsion] against attack data size
+* Run the above experiment for fff_ttt, rff_ttt, nff_ttt
+
+Experiment3: Show cluster has better attack resiliance than ensemble.
+* Run cluster filtering on attacked training data
+* Run serial SVM on filtered data
+* Clean data: 5000
+* Attack data: 500:500:5000
+* Record [training time], [predicting time], [predicting precision]
+* Plot [predicting precision] against attack data size
+* Compare [time] here with [time] in experiment2
+
+Experiment4: Combine cluster with ensemble
+* Run cluster filterring on attacked traininig data
+* Emsemble filtered data
+* Run ensemble SVM
+* Clean data: 5000
+* Attack data: 500:500:5000
+* 6/7 of training data is ensembled
+* Record [predicting precision]
+* Compare [predicting precision] with experiment3

@@ -17,4 +17,4 @@ for ii, l in enumerate(f):
 		j.append(int(jj))
 		data.append(float(val))
 
-X = coo_matrix((data, (i,j))
+X = coo_matrix((data, (i,j)))
