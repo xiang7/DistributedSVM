@@ -1,0 +1,16 @@
+#training set
+cat t>ta
+# attack set
+head -n 100 rff_ttt>>ta 
+#get pos and neg points of the mixed set
+python convert.py ta
+#test the f1 score on the mixed set
+python svm_model.py -i ta -pos 1 -neg -1 -libsvm -cf a9a.t
+#run cluster on the neg example
+./bin/kmlsample -d 123 -k 50 -df neg -l -1 -max 10000
+#run cluster on the pos example
+./bin/kmlsample -d 123 -k 50 -df pos -l 1 -max 10000 
+#put pos and neg output of cluster into one file
+cat output_neg output_pos > cluster_output  
+#test the f1 score of the cluster filtered output
+python svm_model.py -i cluster_output -pos 1 -neg -1 -libsvm -cf a9a.t 
