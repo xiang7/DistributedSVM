@@ -1,0 +1,65 @@
+************Datasize=100****************
+Training time=  0.001770019531250
+t_p     t_n    f_p    f_n    precision    recall     f1
+1620   11538   1620   2226   0.643623   0.421217   0.509194
+Predict time=  0.384202957153320
+************Datasize=500****************
+Training time=  0.003941059112549
+t_p     t_n    f_p    f_n    precision    recall     f1
+2150   11201   2150   1696   0.635343   0.559022   0.594744
+Predict time=  0.308591127395630
+************Datasize=900****************
+Training time=  0.008105993270874
+t_p     t_n    f_p    f_n    precision    recall     f1
+2109   11494   2109   1737   0.691475   0.548362   0.611659
+Predict time=  0.377868175506592
+************Datasize=1300****************
+Training time=  0.013702154159546
+t_p     t_n    f_p    f_n    precision    recall     f1
+2031   11643   2031   1815   0.719447   0.528081   0.609087
+Predict time=  0.485857009887695
+************Datasize=1700****************
+Training time=  0.025078058242798
+t_p     t_n    f_p    f_n    precision    recall     f1
+2269   11410   2269   1577   0.688828   0.589964   0.635574
+Predict time=  0.577569961547852
+************Datasize=2100****************
+Training time=  0.035076141357422
+t_p     t_n    f_p    f_n    precision    recall     f1
+2243   11484   2243   1603   0.702254   0.583203   0.637216
+Predict time=  0.727025985717773
+************Datasize=2500****************
+Training time=  0.033260107040405
+t_p     t_n    f_p    f_n    precision    recall     f1
+2158   11546   2158   1688   0.708238   0.561102   0.626142
+Predict time=  0.785191059112549
+************Datasize=2900****************
+Training time=  0.048570871353149
+t_p     t_n    f_p    f_n    precision    recall     f1
+2210   11539   2210   1636   0.711526   0.574623   0.635788
+Predict time=  0.907486915588379
+************Datasize=3300****************
+Training time=  0.067921876907349
+t_p     t_n    f_p    f_n    precision    recall     f1
+2151   11557   2151   1695   0.710135   0.559282   0.625745
+Predict time=  1.018167018890381
+************Datasize=3700****************
+Training time=  0.093195915222168
+t_p     t_n    f_p    f_n    precision    recall     f1
+2253   11505   2253   1593   0.707823   0.585803   0.641058
+Predict time=  1.059085130691528
+************Datasize=4100****************
+Training time=  0.116952180862427
+t_p     t_n    f_p    f_n    precision    recall     f1
+2203   11578   2203   1643   0.719935   0.572803   0.637996
+Predict time=  1.225183963775635
+************Datasize=4500****************
+Training time=  0.120036840438843
+t_p     t_n    f_p    f_n    precision    recall     f1
+2143   11598   2143   1703   0.719128   0.557202   0.627893
+Predict time=  1.383469820022583
+************Datasize=4900****************
+Training time=  0.136539936065674
+t_p     t_n    f_p    f_n    precision    recall     f1
+2214   11532   2214   1632   0.710298   0.575663   0.635933
+Predict time=  1.479241847991943
