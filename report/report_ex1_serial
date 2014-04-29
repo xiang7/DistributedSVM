@@ -4,6 +4,7 @@ t_p     t_n    f_p    f_n    precision    recall     f1
 2265   11476   2265   1581   0.702543   0.588924   0.827489
 Predict time=  8.990720987319946
 ************Datasize=6000****************
+t
 t_p     t_n    f_p    f_n    precision    recall     f1
 2212   11564   2212   1634   0.717483   0.575143   0.825311
 Predict time= 10.888425827026367
