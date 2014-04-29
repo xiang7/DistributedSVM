@@ -1,0 +1,266 @@
+Attack type: fff_ttt
+*******************Attacksize=1000*************
+Training time=213.839105844497681
+t_p     t_n    f_p    f_n    precision    recall     f1
+1433   11915   520   2413   0.733743   0.372595   0.494223
+Predict time= 55.566234111785889
+*******************Attacksize=2000*************
+Training time=327.482030868530273
+t_p     t_n    f_p    f_n    precision    recall     f1
+1029   11811   624   2817   0.622505   0.267551   0.374250
+Predict time= 73.395271778106689
+*******************Attacksize=3000*************
+Training time=399.061153173446655
+t_p     t_n    f_p    f_n    precision    recall     f1
+905   11870   565   2941   0.615646   0.235309   0.340482
+Predict time= 85.971719026565552
+*******************Attacksize=4000*************
+Training time=441.313340902328491
+t_p     t_n    f_p    f_n    precision    recall     f1
+816   11921   514   3030   0.613534   0.212168   0.315301
+Predict time= 96.368247985839844
+*******************Attacksize=5000*************
+Training time=486.444485902786255
+t_p     t_n    f_p    f_n    precision    recall     f1
+817   11921   514   3029   0.613824   0.212428   0.315627
+Predict time=105.500401020050049
+*******************Attacksize=6000*************
+Training time=528.119254112243652
+t_p     t_n    f_p    f_n    precision    recall     f1
+816   11920   515   3030   0.613073   0.212168   0.315240
+Predict time=114.771252870559692
+*******************Attacksize=7000*************
+Training time=498.841836929321289
+t_p     t_n    f_p    f_n    precision    recall     f1
+824   11885   550   3022   0.599709   0.214249   0.315709
+Predict time=122.425266981124878
+*******************Attacksize=8000*************
+t_p     t_n    f_p    f_n    precision    recall     f1
+833   11791   644   3013   0.563981   0.216589   0.312981
+Predict time=129.864056110382080
+*******************Attacksize=9000*************
+Training time=653.029417037963867
+t_p     t_n    f_p    f_n    precision    recall     f1
+833   11791   644   3013   0.563981   0.216589   0.312981
+Predict time=138.408787012100220
+*******************Attacksize=10000*************
+Training time=704.759928941726685
+t_p     t_n    f_p    f_n    precision    recall     f1
+610   10370   2065   3236   0.228037   0.158606   0.187088
+Predict time=143.280229091644287
+*******************Attacksize=11000*************
+Training time=744.159428119659424
+t_p     t_n    f_p    f_n    precision    recall     f1
+399   5147   7288   3447   0.051906   0.103744   0.069193
+Predict time=146.923983097076416
+*******************Attacksize=12000*************
+Training time=788.091228961944580
+t_p     t_n    f_p    f_n    precision    recall     f1
+570   4015   8420   3276   0.063404   0.148206   0.088813
+Predict time=150.555270910263062
+*******************Attacksize=13000*************
+Training time=840.548686981201172
+t_p     t_n    f_p    f_n    precision    recall     f1
+570   4015   8420   3276   0.063404   0.148206   0.088813
+Predict time=156.602934837341309
+*******************Attacksize=14000*************
+Training time=897.343845129013062
+t_p     t_n    f_p    f_n    precision    recall     f1
+570   4015   8420   3276   0.063404   0.148206   0.088813
+Predict time=159.411401987075806
+*******************Attacksize=15000*************
+Training time=926.759675979614258
+t_p     t_n    f_p    f_n    precision    recall     f1
+570   4015   8420   3276   0.063404   0.148206   0.088813
+Predict time=161.621986865997314
+*******************Attacksize=16000*************
+Training time=958.579687118530273
+t_p     t_n    f_p    f_n    precision    recall     f1
+570   4015   8420   3276   0.063404   0.148206   0.088813
+Predict time=164.288163900375366
+*******************Attacksize=17000*************
+Training time=967.251975059509277
+t_p     t_n    f_p    f_n    precision    recall     f1
+570   4015   8420   3276   0.063404   0.148206   0.088813
+Predict time=166.065569877624512
+*******************Attacksize=18000*************
+Training time=1080.949412107467651
+t_p     t_n    f_p    f_n    precision    recall     f1
+570   4015   8420   3276   0.063404   0.148206   0.088813
+Predict time=174.136291027069092
+*******************Attacksize=19000*************
+Training time=1106.505475997924805
+t_p     t_n    f_p    f_n    precision    recall     f1
+570   4015   8420   3276   0.063404   0.148206   0.088813
+Predict time=171.501721143722534
+
+Attack type: rff_ttt
+*******************Attacksize=1000*************
+Training time=172.774977922439575
+t_p     t_n    f_p    f_n    precision    recall     f1
+2087   11690   745   1759   0.736935   0.542642   0.625037
+Predict time= 47.977957010269165
+*******************Attacksize=2000*************
+Training time=211.336295843124390
+t_p     t_n    f_p    f_n    precision    recall     f1
+1812   11840   595   2034   0.752804   0.471139   0.579562
+Predict time= 56.377516031265259
+*******************Attacksize=3000*************
+Training time=243.388893127441406
+t_p     t_n    f_p    f_n    precision    recall     f1
+1026   11816   619   2820   0.623708   0.266771   0.373702
+Predict time= 68.176416158676147
+*******************Attacksize=4000*************
+Training time=304.822558879852295
+t_p     t_n    f_p    f_n    precision    recall     f1
+1026   11816   619   2820   0.623708   0.266771   0.373702
+Predict time= 78.676517963409424
+*******************Attacksize=5000*************
+Training time=346.290441036224365
+t_p     t_n    f_p    f_n    precision    recall     f1
+1027   11816   619   2819   0.623937   0.267031   0.373999
+Predict time= 91.205211162567139
+*******************Attacksize=6000*************
+Training time=389.059854030609131
+t_p     t_n    f_p    f_n    precision    recall     f1
+1027   11816   619   2819   0.623937   0.267031   0.373999
+Predict time= 99.694747209548950
+*******************Attacksize=7000*************
+Training time=439.135249853134155
+t_p     t_n    f_p    f_n    precision    recall     f1
+1027   11816   619   2819   0.623937   0.267031   0.373999
+Predict time=107.505690097808838
+*******************Attacksize=8000*************
+Training time=492.217560052871704
+t_p     t_n    f_p    f_n    precision    recall     f1
+903   11875   560   2943   0.617225   0.234789   0.340177
+Predict time=116.103971004486084
+*******************Attacksize=9000*************
+Training time=498.239717006683350
+t_p     t_n    f_p    f_n    precision    recall     f1
+1185   11524   911   2661   0.565363   0.308112   0.398856
+Predict time=123.905944108963013
+*******************Attacksize=10000*************
+Training time=531.530367136001587
+t_p     t_n    f_p    f_n    precision    recall     f1
+1185   11527   908   2661   0.566173   0.308112   0.399057
+Predict time=131.421065092086792
+*******************Attacksize=11000*************
+Training time=644.421074867248535
+t_p     t_n    f_p    f_n    precision    recall     f1
+1185   11496   939   2661   0.557910   0.308112   0.396985
+Predict time=140.904495000839233
+*******************Attacksize=12000*************
+Training time=700.484673976898193
+t_p     t_n    f_p    f_n    precision    recall     f1
+1186   11485   950   2660   0.555243   0.308372   0.396523
+Predict time=148.266144037246704
+*******************Attacksize=13000*************
+Training time=734.910900831222534
+t_p     t_n    f_p    f_n    precision    recall     f1
+1186   11476   959   2660   0.552914   0.308372   0.395927
+Predict time=154.862183809280396
+*******************Attacksize=14000*************
+Training time=844.394742965698242
+t_p     t_n    f_p    f_n    precision    recall     f1
+1186   11476   959   2660   0.552914   0.308372   0.395927
+Predict time=167.064054012298584
+*******************Attacksize=15000*************
+Training time=876.995138883590698
+t_p     t_n    f_p    f_n    precision    recall     f1
+144   12291   144   3702   0.500000   0.037441   0.069666
+Predict time=172.446069002151489
+
+Attack type: nff_ttt
+*******************Attacksize=1000*************
+Training time=115.946516036987305
+t_p     t_n    f_p    f_n    precision    recall     f1
+2226   11581   854   1620   0.722727   0.578783   0.642795
+Predict time= 39.125699996948242
+*******************Attacksize=2000*************
+Training time=136.104665994644165
+t_p     t_n    f_p    f_n    precision    recall     f1
+2226   11589   846   1620   0.724609   0.578783   0.643539
+Predict time= 44.050359964370728
+*******************Attacksize=3000*************
+Training time=160.948764085769653
+t_p     t_n    f_p    f_n    precision    recall     f1
+2227   11587   848   1619   0.724228   0.579043   0.643549
+Predict time= 50.210135936737061
+*******************Attacksize=4000*************
+Training time=183.389301061630249
+t_p     t_n    f_p    f_n    precision    recall     f1
+2226   11592   843   1620   0.725318   0.578783   0.643818
+Predict time= 53.761480808258057
+*******************Attacksize=5000*************
+Training time=205.667339086532593
+t_p     t_n    f_p    f_n    precision    recall     f1
+2226   11591   844   1620   0.725081   0.578783   0.643725
+Predict time= 58.277579069137573
+*******************Attacksize=6000*************
+Training time=230.533740043640137
+t_p     t_n    f_p    f_n    precision    recall     f1
+2222   11596   839   1624   0.725907   0.577743   0.643405
+Predict time= 64.165589809417725
+*******************Attacksize=7000*************
+Training time=261.196746110916138
+t_p     t_n    f_p    f_n    precision    recall     f1
+2224   11596   839   1622   0.726086   0.578263   0.643798
+Predict time= 69.494966983795166
+*******************Attacksize=8000*************
+Training time=282.857295989990234
+t_p     t_n    f_p    f_n    precision    recall     f1
+2216   11606   829   1630   0.727750   0.576183   0.643158
+Predict time= 73.470592975616455
+*******************Attacksize=9000*************
+Training time=315.525636911392212
+t_p     t_n    f_p    f_n    precision    recall     f1
+2215   11593   842   1631   0.724567   0.575923   0.641750
+Predict time= 80.193834066390991
+*******************Attacksize=10000*************
+Training time=333.052887916564941
+t_p     t_n    f_p    f_n    precision    recall     f1
+2213   11607   828   1633   0.727721   0.575403   0.642660
+Predict time= 85.796000957489014
+*******************Attacksize=11000*************
+Training time=364.399870872497559
+t_p     t_n    f_p    f_n    precision    recall     f1
+2216   11604   831   1630   0.727273   0.576183   0.642971
+Predict time= 88.148569107055664
+*******************Attacksize=12000*************
+Training time=397.006433963775635
+t_p     t_n    f_p    f_n    precision    recall     f1
+2210   11600   835   1636   0.725780   0.574623   0.641416
+Predict time= 92.881199121475220
+*******************Attacksize=13000*************
+Training time=414.218019962310791
+t_p     t_n    f_p    f_n    precision    recall     f1
+2212   11601   834   1634   0.726198   0.575143   0.641904
+Predict time= 98.484221935272217
+*******************Attacksize=14000*************
+Training time=449.664227962493896
+t_p     t_n    f_p    f_n    precision    recall     f1
+2213   11595   840   1633   0.724861   0.575403   0.641542
+Predict time=104.974147081375122
+*******************Attacksize=15000*************
+Training time=495.815093040466309
+t_p     t_n    f_p    f_n    precision    recall     f1
+2213   11599   836   1633   0.725812   0.575403   0.641914
+Predict time=107.668605089187622
+*******************Attacksize=16000*************
+Training time=533.266871929168701
+t_p     t_n    f_p    f_n    precision    recall     f1
+2209   11608   827   1637   0.727602   0.574363   0.641965
+Predict time=114.880141973495483
+*******************Attacksize=17000*************
+Training time=614.789935111999512
+t_p     t_n    f_p    f_n    precision    recall     f1
+2211   11599   836   1635   0.725632   0.574883   0.641520
+Predict time=123.490417003631592
+*******************Attacksize=18000*************
+Training time=627.323503017425537
+t_p     t_n    f_p    f_n    precision    recall     f1
+2210   11607   828   1636   0.727452   0.574623   0.642069
+Predict time=125.230723857879639
+*******************Attacksize=19000*************
+Training time=652.710937023162842
