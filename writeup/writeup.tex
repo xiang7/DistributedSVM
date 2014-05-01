@@ -38,43 +38,44 @@ Next session looks into attack algorithms.
 
 \section{Attack Algorithm}
 
-The attacks include some or all of the following:
+Label flip attacks choose data points from the victim's benign training set, flip their labels and then insert them back into the victim's training set. It is a very popular attack and is well studied in literature \cite{xiao12}. 
+
+This research focus on label flip attacks for the following reason:
 
 \begin{itemize}
-\item Loss Optimization attack - create datapoints that optimize loss function \cite{biggio12}
-\item Red herring attack - add fake feature and have target classifier depend on fake features as heavily as possible \cite{newsome06}
-\item Inseparability attack - mix the features from target classifier into same data points to confuse it \cite{newsome06}
-\item Furthest-First Flip attack - pick the furthest data point from the decision plane and flip its label \cite{xiao12}
+\item Label flip attack can be a very strong attack when the data points whose labels are to be flipped is chosen carefully.
+\item Label flip attack requires few computational power. Adversary only needs to choose data points and flip their label. However, huge damage can be done to victim's learner by this small amount of computation. 
+\item Label flip attack represents a broad family of attacks that tries to put data points of a certain class into the other class's region. Optimization attacks are one example. It requires solving an optimization over a objective function (e.g. maximize the loss function). It will result in a larger damage but require much more computation power and could be easily filtered out since they're normally very far away from the benign data points.
 \end{itemize}
 
-\subsection{Red Herring Attack}
+Our work picks three label flip attacks from a previous work with different strategy in terms of how points are picked. Difference in strategy results in the attack being stronger or weaker than others.
 
-This attack creates fake features and a strong statistical relationship between the fake features and the class label. This encourages the SVM to learn the fake features as important or indicative features, so that the decision will rely heavily on them. The distribution of the fake features will of course be very different from other benign features. Thus, the prediction accuracy of SVM will be compromised.
+\begin{itemize}
+\item Nearest-First Flip attack - train an SVM on victim's data set and pick the points nearest to the decision plane to flip label \cite{xiao12}.
+\item Random Flip attack - randomly pick data points from victim's benign training set, and flip their labels \cite{xiao12}.
+\item Furthest-First Flip attack - train an SVM on victim's data set and pick the furthest data point from the decision plane and flip its label \cite{xiao12}.
+\end{itemize}
+
+\subsection{Nearest-First Flip attack}
+
+This attack picks the nearst points to the decision plane. Despite the fact that this is the weakest attack of the three, this attack hides the malicious points very close the the benign points. This tests the defense algorithm's robustness.
 
 The attack works as follows:
 
 \begin{itemize}
-\item Step 1 - Create $N$ data points, each with $k$ random benign features.
-\item Step 2 - Cut the $N$ data points into 2 halves, $S_1$ and $S_2$. For all points in $S_1$, add a feature that never appeared in the benign dataset.
-\item Step 3 - Label all points in $S_1$ as positive and those in $S_2$ as negative.
-\item Step 4 - Insert the data points (interleaved, one positive one negative) into victim's dataset.
+\item Step 1 - Train an SVM on benign data set.
+\item Step 2 - Apply the decision function of SVM on all data points of the benign data set.
+\item Step 3 - Sort the decision values and find the minimum in absolute value.
+\item Step 4 - Flip the chosen point and insert it back into the benign data set.
 \end{itemize}
 
-\subsection{Inseparability Attack}
+\subsection{Random Flip Attack}
 
-This attack mixes the features of the victim's training set and give them random labels. This will confuse the victim's SVM and bring down its accuracy.
-
-The attack works as follows:
-
-\begin{itemize}
-\item Step 1 - Create $N$ data points, each with $k$ random benign features.
-\item Step 2 - For each data point, assign a random label.
-\item Step 3 - Insert the data points into victim's dataset.
-\end{itemize}
+This attack picks a random point to flip label. It is stronger the the Nearest-First Flip attack but weaker than the Furthest-First Flip attack. The pro of this attack is that there's no need to train SVM on victim's dataset. A random pick is all computation that needs to be done. It is the fastest attack of the three and yield a good damage on victim's learner.
 
 \subsection{Furthest-First Flip Attack}
 
-This attack picks the data point that is furthest from the SVM decision plane and flip its label. It is shown to generate a near-optimal attack effect on SVM \cite{xiao12}. Another benefit of this attack over the optimal attack is, it works on discrete feature space, since optimal attack involves solving convex optimization over loss function which requires a differentiable field. This limits optimal attacks to only continuous feature space.
+This attack picks the data point that is furthest from the SVM decision plane and flip its label. It is shown to generate a near-optimal attack effect on SVM \cite{xiao12}. Another benefit of this attack over the optimal attack is, it works on discrete feature space, since optimal attack involves solving convex optimization over loss function which requires a differentiable field. This limits optimal attacks to only continuous feature space. This attack is the strongest of the three.
 
 The attack works as follows:
 
@@ -154,6 +155,9 @@ w8a&\cite{jp98} & 2 & 49,749 / 14,951 & 300 / 300 \\
 \hline
 \end{tabular}
 \end{table*}
+
+\section{Results}
+
 
 
 
