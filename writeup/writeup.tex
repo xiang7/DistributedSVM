@@ -1,7 +1,8 @@
 \documentclass[10pt,conference,compsocconf,letterpaper]{IEEEtran}
 %\documentclass{article}
+\usepackage{graphicx}
 \title{Distributed SVM}
-\author{Luojie Xiang}
+\author{Luojie Xiang, Shunrang Cao}
 \date{}
 
 \begin{document}
@@ -158,8 +159,102 @@ w8a&\cite{jp98} & 2 & 49,749 / 14,951 & 300 / 300 \\
 
 \section{Results}
 
+This section presents the result of the experiments. The first subsection shows that of the ensemble method, which serves as our baseline. The second subsection shows that of the adaptive cluster method.
+
+\subsection{Results of Ensemble Method}
+Fig. \ref{fig:ensemble_time} and Fig. \ref{fig:ensemble_f1} shows the comparison between standard SVM and ensemble SVM training time and F1-score. We can conclude that, when dataset is very small, ensemble method has a lower F1-score but it achieves similar score when the dataset is large enough. Ensemble method can always have a much lower time than standard SVM training.
+\begin{figure}[h]
+  \centering
+  \label{fig:ensemble_time}
+  \includegraphics[width=0.4\textwidth]{figures/exp1_time}
+  \caption{Time of standard SVM and ensemble SVM training}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \label{fig:ensemble_f1}
+	  \includegraphics[width=0.4\textwidth]{figures/exp1_f1}
+  \caption{F1-score of standard SVM and ensemble SVM training}
+\end{figure}
+
+\subsection{Standard SVM Under Attack}
+This section presents the result for three attacks on standard SVM to demonstrate the effect of each attack on victim's learner. Fig. \ref{fig:exp2_serial_final} shows that, FFF attack is the strongest attack and thus have the most damage on victim's learner. Following is the RF attack. The mildest is the NFF attack which barely does any damage to the victim's learner.
 
 
+\begin{figure}[h]
+  \centering
+  \label{fig:exp2_serial_final}
+  \includegraphics[width=0.4\textwidth]{figures/exp2_serial_final}
+  \caption{F1-score of standard SVM training under Attack}
+\end{figure}
+
+\subsection{Ensemble Method Under Attack}
+The above section shows that, when dataset is large enough, ensemble method can achieve similar F1-score with standard SVM while have much lower training time. This section shows the results for ensemble method and standard SVM under attack. 
+
+Fig. \ref{fig:ensemble_nff} shows the result of Nearest-First Flip attack. NFF attack is the mildest of the three and thus did not have much influence on F1-score of either standard SVM or Ensemble method. Fig. \ref{fig:ensemble_rff} shows the result of Random-Flip attack. Fig. \ref{fig:ensemble_fff} shows the result of Furthest-First Flip Attack. Both figure shows that ensemble has some marginal defense effect when the number of malicious point is small. However, when more malicious points are added, the defense effect disappears.
+
+\begin{figure}[h]
+  \centering
+  \label{fig:ensemble_nff}
+  \includegraphics[width=0.4\textwidth]{figures/serial_ensemble_nff}
+  \caption{F1-score of standard SVM and ensemble SVM training under NFF-Attack}
+\end{figure}
+\begin{figure}[h]
+  \centering
+  \label{fig:ensemble_rff}
+  \includegraphics[width=0.4\textwidth]{figures/serial_ensemble_rff}
+  \caption{F1-score of standard SVM and ensemble SVM training under RF-Attack}
+\end{figure}
+\begin{figure}[h]
+  \centering
+  \label{fig:ensemble_fff}
+  \includegraphics[width=0.4\textwidth]{figures/serial_ensemble_fff}
+  \caption{F1-score of standard SVM and ensemble SVM training under FFF-Attack}
+\end{figure}
+
+\subsection{Adaptive Cluster Under Attack}
+This session shows the result of proposed method, adaptive cluster under attack, in Fig. \ref{fig:all_nff}, \ref{fig:all_rff}, \ref{fig:all_fff}. It is clear that, for both RF and FFF attack, adaptive cluster can have a good defense effect compared to both standard SVM and Ensemble SVM training. For NFF, since the attack can't do much damage on victim's learner, the defense effect is not obvious. However, when the number of malicious points is large enough, adaptive cluster's defense effect will disappear. This is expected since cluster and distance based filtering assumes that the majority is benign data points. If in an extreme context, the malicious points are the majority, clustering will filter out the benign points which would be an disaster. 
+
+
+\begin{figure}[h]
+  \centering
+  \label{fig:all_nff}
+  \includegraphics[width=0.4\textwidth]{figures/all_nff}
+  \caption{F1-score of standard SVM, ensemble SVM and adaptive cluster training under NFF-Attack}
+\end{figure}
+\begin{figure}[h]
+  \centering
+  \label{fig:all_rff}
+  \includegraphics[width=0.4\textwidth]{figures/all_rff}
+  \caption{F1-score of standard SVM, ensemble SVM and adaptive cluster training under RF-Attack}
+\end{figure}
+\begin{figure}[h]
+  \centering
+  \label{fig:all_fff}
+  \includegraphics[width=0.4\textwidth]{figures/all_fff}
+  \caption{F1-score of standard SVM, ensemble SVM and adaptive cluster training under FFF-Attack}
+\end{figure}
+
+Besides the good defense effect, it is important that the defense should come with a tolerable cost. Fig. \ref{fig:exp_time_s_d_c} shows that adaptive cluster does introduce overhead to the baseline ensemble method. However, with the added overhead, it still is much faster than standard SVM. Therefore, we think this overhead is tolerable.
+
+
+\begin{figure}[h]
+  \centering
+  \label{fig:exp_time_s_d_c}
+  \includegraphics[width=0.4\textwidth]{figures/exp_time_s_d_c}
+  \caption{Time of standard SVM, ensemble SVM and adaptive cluster training}
+\end{figure}
+
+\section{Conclusions}
+
+This research proposed a modified adaptive cluster method to provide a defense against label flip attacks on SVM training. The modification is based on clustering and distance filtering to filter likely attack points. Through experiments, it is shown that the proposed method has good defense effect for the label flip attack. Compared with a baseline, ensemble learning, which is a proved method of improving accuracy and robustness of machine learning algorithms, it is shown that the proposed method has a much better resiliency against attack. The proposed method introduces some overhead over the baseline. However, it is still much faster than standard SVM training.
+
+The proposed method, however, has the following limitations. 
+
+\begin{itemize}
+\item The proposed method is only experimented on label flip attacks. There are other attacks that has a totally different mechanism with respect to label flip attack. The defense effect of the proposed method is not understood on those attacks.
+\item The proposed method is only a heuristically useful defense. However, no mathematical proof is given regarding the error bound for the defense. Therefore, there's no guarantee that, the proposed method will have good defense effect against label flip attack in any situation. 
+\end{itemize} 
 
 \begin{thebibliography}{9}
 
