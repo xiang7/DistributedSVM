@@ -125,6 +125,8 @@ This method is modified to include resiliency against malicious attacks.
 
 \textit{Active Learning} - Active learning have machine learning algorithms summarizes the dataset and present to human experts the data points that it is most not sure of \cite{reghavan06}. Human experts will label these very concise summaries and guide the learning process. Since in Adaptive Cluster algorithm, the representatives of each cluster is found, they can be convieniently used as the summary. Human expert will tell the learning algorithm which representatives are malicious. The cluster whose representative is labeled malicious by the expert will be thrown away.
 
+
+
 \section{Evaluation}
 
 The evaluation comes in three fold:
@@ -156,6 +158,16 @@ w8a&\cite{jp98} & 2 & 49,749 / 14,951 & 300 / 300 \\
 \hline
 \end{tabular}
 \end{table*}
+
+\section{Experiment setup}
+Corresponding to the evaluation policy, three experiments are designed.
+\subsection{Compare speed of standard SVM and ensemble SVM}
+The size of training data begins from 1000 and increases all the way to 30,000 with the step width of 1000. The time for training and f1 score are recorded for different size of training data.
+\subsection{Evaluate attack resilience of standard SVM and ensemble SVM}
+The size of training data is fixed at 20,000, which only contains clean data. Attack points are added to clean training data. The number of attack points increases from 1000 to 20,000 with the step width of 1000. Both the f1 score and training time are recorded. The attacks are applied to both standard SVM and ensemble SVM. Three types of attacks are used: NFF, RFF, FFF.
+\subsection{Evaluae attack relilience of adaptive cluster}
+The setting of training data and attack are the same as the previous experiment. They are applied to the method of adaptive cluster method. Both the f1 score and training time are recorded.
+
 
 \section{Results}
 
