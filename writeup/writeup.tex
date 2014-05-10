@@ -20,6 +20,22 @@ The idea of the project is to design and implement a distributed SVM with the fo
 \item Better resiliency towards malicious attack
 \end{itemize}
 
+This work focus on malicious attack since adversarial machine learning has been a field of increasing interest. It addresses the question of learning in the presense of malicious noise. The practical scenario is that, nowadays many machine learning algorithms are used in practical online systems to provide a service or be a part of a larger system. For example, Topsy lab used machine learning algorithm in sentiment analysis to successfully predict a Netflix stock price drop based on twitter. Others have machine learning algorithm in election prediction, failure prediction in distributed systems etc. All these applications have two characteristics in common:
+
+\begin{itemize}
+\item Publicly available training set. 
+
+Many applications draw training set from social media. Text analysis is a mature area and social media forms a very rich corpus that can support many data mining needs.
+
+\item Online stream training/prediction.
+
+At the very beginning, machine learning algorithms are mostly trained offline, once and for all. Then the model is used for prediction. This is found insufficient now since corpus change as people would talk about different things at different times on twitter. One single fixed training set is very hard to capture these changing trends. Therefore, most system now collects training set (from social media) frequently to update their model so that the model would not be obsolete and could still capture the important statistics in the current corpus.
+\end{itemize}
+
+The above characteristics raises a vulnerability for such a system since the public accessibility of the training set (drawed from social media). Adversary can craft malicious data points and post it to social media. They can almost always be sure to have their victim obtain their malicious point if they know what their victim is doing. For example, to confuse a classifier about Netfilx's sentiment, just stack a lot of positive words like happy with the word Netflix, and then label the data point with some frowny faces (many sentiment analysis system use such a distant supervised method to label their dataset, though noisy but provide good result anyways). 
+
+For the victim to avoid being attacked, he must use something better than a naive training algorithm. This is the purpose of this work to look into a defensive algorithm without introducing so much overhead. Of course besides malicious attack, crash-stop failures are an important problem. We don't focus on this failure model since the proposed algorithm can be implemented on other platforms that supports some fault tolerance such as Hadoop.
+
 The attack model and attack algorithms are described in next two sections.
 
 \section{Attack Model}
@@ -125,30 +141,20 @@ This method is modified to include resiliency against malicious attacks.
 
 \textit{Active Learning} - Active learning have machine learning algorithms summarizes the dataset and present to human experts the data points that it is most not sure of \cite{reghavan06}. Human experts will label these very concise summaries and guide the learning process. Since in Adaptive Cluster algorithm, the representatives of each cluster is found, they can be convieniently used as the summary. Human expert will tell the learning algorithm which representatives are malicious. The cluster whose representative is labeled malicious by the expert will be thrown away.
 
+In this work, we only experiment with distance filtering since automated method is more desired (if it does work, and that is the case for this work). 
 
 
-\section{Evaluation}
 
-The evaluation comes in three fold:
+\section{Experiment setup}
 
-\textit{Speed} - The speed would be compared with standard SVM training.
-
-Standard SVM	- 100, 1000, 10,000 12,000 ... too long to train
-Distributed SVM	- 10,000 12,000 ... 
-
-Record Acc, Time
-
-\textit{Resiliency against malicious attacks} - The accuracy will be compared with standard SVM as more malicious points are added.
-
-Standard SVM    - 10,000 +2,000 malicious point ... too long to train
-Distributed SVM - 10,000 +2,000 ... 
-
-Record Acc
+This section first describes the dataset used and then the experiments.
 
 \subsection{Dataset}
-A lot of datasets are made publicly available thanks to competitions such as KDD CUP, Kaggle and research groups such as UCI Machine Learning Repository, LIBSVM \cite{kddcup,kaggle,uci,libsvm}. Appropriate dataset will be selected later to facilitate testing.
+A lot of datasets are made publicly available thanks to competitions such as KDD CUP, Kaggle and research groups such as UCI Machine Learning Repository, LIBSVM \cite{kddcup,kaggle,uci,libsvm}. The dataset described in Table \ref{table_dataset} is selected. It is a realistic dataset (not synthesized). Therefore it has many undesired features such as imbalance between positive and negative class etc. However, the proposed algorithm should work with these features.
 
 \begin{table*}[t]
+\label{table_dataset}
+\caption{Description of dataset}
 \centering
 \begin{tabular}{|l|l|l|l|l|}
 \hline
@@ -159,8 +165,6 @@ w8a&\cite{jp98} & 2 & 49,749 / 14,951 & 300 / 300 \\
 \end{tabular}
 \end{table*}
 
-\section{Experiment setup}
-Corresponding to the evaluation policy, three experiments are designed.
 \subsection{Compare speed of standard SVM and ensemble SVM}
 The size of training data begins from 1000 and increases all the way to 30,000 with the step width of 1000. The time for training and f1 score are recorded for different size of training data.
 \subsection{Evaluate attack resilience of standard SVM and ensemble SVM}
